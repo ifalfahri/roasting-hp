@@ -6,8 +6,6 @@ import './style.css';
 const form = document.querySelector('form');
 const output = document.querySelector('.output');
 
-console.log('GOOGLE_API_KEY:', process.env.GOOGLE_API_KEY);
-
 form.onsubmit = async ev => {
   ev.preventDefault();
   output.textContent = 'Sedang mikirin roastingan...';
@@ -34,7 +32,7 @@ form.onsubmit = async ev => {
     // Call the multimodal model, and get a stream of results
     const vision = new ChatGoogleGenerativeAI({
       modelName: 'gemini-1.5-flash', // or gemini-1.5-pro
-      
+      apiKey: process.env.GOOGLE_API_KEY,
     });
 
     // Multi-modal streaming
