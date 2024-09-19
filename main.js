@@ -6,6 +6,8 @@ import './style.css';
 const form = document.querySelector('form');
 const output = document.querySelector('.output');
 
+console.log('GOOGLE_API_KEY:', process.env.GOOGLE_API_KEY);
+
 form.onsubmit = async ev => {
   ev.preventDefault();
   output.textContent = 'Sedang mikirin roastingan...';
@@ -50,3 +52,4 @@ form.onsubmit = async ev => {
     output.innerHTML += '<hr>' + e;
   }
 };
+
