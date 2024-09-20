@@ -42,7 +42,7 @@ form.onsubmit = async ev => {
       const response = await callGemini(contents, 'gemini-1.0-pro');
       output.textContent = response.text; // Process the response from gemini-1.5-pro
     } catch (error) {
-      if (error.code === 429 && error.message.includes('RESOURCE_EXHAUSTED')) {
+      if (error.code === 429) {
         console.warn('Gemini 1.5 Flash rate limit exceeded. Using Gemini 1.0 Pro.');
         try {
           // Fallback to gemini-1.0-pro
