@@ -85,7 +85,7 @@ function Form({ setOutput }) {
         setOutput(
           (prevOutput) =>
             prevOutput +
-            "<br><span class='text-gray-500'><center>(Yah, kayaknya sinyal ke otak AI-nya putus. Kena azab keseringan roasting kali. Coba ulangi lagi yaa.)</center></span>"
+            "<br><span class='text-gray-500'><center>(Yah, kayaknya sinyal ke otak AI-nya putus. Kayanya kena azab karena keseringan roasting deh. Coba ulangi lagi yaa.)</center></span>"
         );
       }
     } finally {
