@@ -16,12 +16,12 @@ function Form({ setOutput }) {
     const baterai = event.target.baterai.value;
     const kamera = event.target.kamera.value;
 
-    const promptText = `Jadilah seorang yang expert dalam spesifikasi hp, dan update mengenai tipe-tipe hp yang menggunakan bahasa gaul. Buat sebuah roasting yang menghina sebuah hp dengan  
-       Merk ${merk}, dan spesifikasi
+    const promptText = `Jadilah seorang yang expert dalam spesifikasi hp, dan update mengenai tipe-tipe hp dan menggunakan bahasa gaul. Buat sebuah roasting yang menghina sebuah hp dengan  
+       Merk ${merk}, ejek merknya, kemudian spesifikasi
        Processor ${processor}, 
        RAM ${ram}, 
        Baterai ${baterai},
-       Kamera ${kamera}, dalam 1 paragraf saja tapi sangat nyelekit dan bikin sakit hati`;
+       Kamera ${kamera}, bahas juga harganya jika memungkinkan, semua dalam 1 paragraf saja tapi sangat nyelekit dan bikin sakit hati`;
 
     const contents = [
       new HumanMessage({
