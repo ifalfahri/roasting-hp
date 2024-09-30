@@ -13,13 +13,15 @@ function Form({ setOutput }) {
     const merk = event.target.merk.value;
     const ram = event.target.ram.value;
     const processor = event.target.processor.value;
+    const layar = event.target.layar.value;
     const baterai = event.target.baterai.value;
     const kamera = event.target.kamera.value;
 
     const promptText = `Jadilah seorang yang expert dalam spesifikasi hp, dan update mengenai tipe-tipe hp dan menggunakan bahasa gaul. Buat sebuah roasting yang menghina sebuah hp dengan  
        Merk ${merk}, ejek merknya, kemudian spesifikasi
        Processor ${processor}, 
-       RAM ${ram}, 
+       RAM ${ram},
+       Layar ${layar}, 
        Baterai ${baterai},
        Kamera ${kamera}, bahas juga harganya jika memungkinkan, semua dalam 1 paragraf saja tapi sangat nyelekit dan bikin sakit hati`;
 
@@ -114,13 +116,9 @@ function Form({ setOutput }) {
       </h1>
       <div className="specs-form">
         <Input label="Merk HP" id="merk" type="text" placeholder="Merk HP" />
-        <Input
-          label="Chipset"
-          id="processor"
-          type="text"
-          placeholder="Chipset"
-        />
+        <Input label="Chipset" id="processor" type="text" placeholder="Chipset"/>
         <Input label="RAM" id="ram" type="text" placeholder="RAM" />
+        <Input label="Layar" id="layar" type="text" placeholder="Layar" />
         <Input label="Baterai" id="baterai" type="text" placeholder="Baterai" />
         <Input label="Kamera" id="kamera" type="text" placeholder="Kamera" />
       </div>
