@@ -17,7 +17,7 @@ function Form({ setOutput }) {
     const baterai = event.target.baterai.value;
     const kamera = event.target.kamera.value;
 
-    const promptText = `Jadilah seorang yang expert dalam spesifikasi hp, dan update mengenai tipe-tipe hp dan menggunakan bahasa gaul. Buat sebuah roasting yang menghina sebuah hp dengan  
+    const promptText = `Kamu adalah seorang yang expert dalam spesifikasi hp, dan update mengenai tipe-tipe hp dan menggunakan bahasa gaul. Buat sebuah roasting yang menghina sebuah hp dengan  
        Merk ${merk}, ejek merknya, kemudian spesifikasi
        Processor ${processor}, 
        RAM ${ram},
