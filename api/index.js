@@ -1,6 +1,6 @@
-const express = require('express');
-const cors = require('cors');
-const gsmarena = require('gsmarena-api');
+import express from 'express';
+import cors from 'cors';
+import gsmarena from 'gsmarena-api';
 
 const app = express();
 
@@ -36,4 +36,4 @@ app.get('/api/device/:deviceId', async (req, res) => {
   }
 });
 
-module.exports = app;
+export default app;
