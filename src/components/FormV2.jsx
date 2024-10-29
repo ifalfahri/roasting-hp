@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import Modal from 'react-modal';
 
-const API_BASE_URL = 'http://localhost:3001/api'; // Update this if your backend is on a different port
+const API_BASE_URL = '/api';
 
 function FormV2({ setOutput }) {
   const [brands, setBrands] = useState([]);
