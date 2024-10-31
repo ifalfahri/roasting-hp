@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import Modal from 'react-modal';
 
-const API_BASE_URL = 'http://localhost:3001/api'; // Update this if your backend is on a different port
+const API_BASE_URL = '/api';
 
 function FormV2({ setOutput }) {
   const [brands, setBrands] = useState([]);
@@ -19,13 +19,31 @@ function FormV2({ setOutput }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const famousBrands = ["Apple", "Samsung", "Xiaomi", "Huawei", "Oppo", "Vivo", "Realme", "Sony", "OnePlus", "Infinix", "Tecno", "Asus", "Google", "vivo"];
+
   useEffect(() => {
     const fetchBrands = async () => {
       setIsLoading(true);
       try {
         const response = await fetch(`${API_BASE_URL}/brands`);
-        const brandList = await response.json();
-        setBrands(brandList.map(brand => ({ value: brand.id, label: brand.name })));
+        let brandList = await response.json();
+
+        const groupedOptions = [
+          {
+            label: "Merek Populer",
+            options: brandList
+              .filter((brand) => famousBrands.includes(brand.name))
+              .map((brand) => ({ value: brand.id, label: brand.name })),
+          },
+          {
+            label: "Merek Lainnya",
+            options: brandList
+              .filter((brand) => !famousBrands.includes(brand.name))
+              .map((brand) => ({ value: brand.id, label: brand.name })),
+          },
+        ];
+
+        setBrands(groupedOptions);
       } catch (error) {
         console.error('Error fetching brands:', error);
       }
@@ -181,6 +199,17 @@ function FormV2({ setOutput }) {
       borderRadius: '0.5rem',
       boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
     }),
+    group: (provided) => ({
+      ...provided,
+      paddingTop: '8px',
+      paddingBottom: '8px',
+      borderBottom: '1px solid #e2e8f0', // Divider line between groups
+      marginBottom: '8px',
+      '&:last-of-type': {
+        borderBottom: 'none', // Remove divider after last group
+      },
+    }),
+    
   };
 
   return (
@@ -212,6 +241,11 @@ function FormV2({ setOutput }) {
           isSearchable
           styles={customStyles}
           isLoading={isLoading && !selectedBrand}
+          formatGroupLabel={(group) => (
+            <div style={{ fontWeight: 'bold', color: '#555', fontSize: '1.1em' }}>
+              {group.label}
+            </div>
+          )}
         />
         {selectedBrand && (
           <Select
