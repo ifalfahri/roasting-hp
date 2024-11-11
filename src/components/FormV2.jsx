@@ -222,7 +222,7 @@ export default function FormV2({ setOutput }) {
             </a>
           </p>
         </div>
-        <h1 className="font-extrabold flex justify-center gap-1 text-2xl mb-4 bg-gradient-to-r from-indigo-400 to-blue-400 text-transparent bg-clip-text hover:animate-bounce">
+        <h1 className="font-extrabold flex justify-center gap-1 text-2xl mb-4 bg-gradient-to-r from-indigo-400 to-blue-400 text-transparent bg-clip-text active:animate-bounce">
           Roasting HP<span className='text-black text-xs hover:text-red-400 transition-colors duration-300'>V2</span>
         </h1>
         <div className="specs-form space-y-4">
