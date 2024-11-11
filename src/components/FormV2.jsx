@@ -19,7 +19,7 @@ export default function FormV2({ setOutput }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   
-  const API_BASE_URL = "https://roasting-hp.vercel.app/api";
+  const API_BASE_URL = "/api";
   
   const famousBrands = ["Apple", "Samsung", "Xiaomi", "Huawei", "Oppo", "Vivo", "Realme", "Sony", "OnePlus", "Infinix", "Tecno", "Asus", "Google", "vivo"];
 
@@ -194,20 +194,6 @@ export default function FormV2({ setOutput }) {
     return translations[name] || name;
   };
 
-  const customStyles = {
-    control: (provided) => ({
-      ...provided,
-      border: '1px solid #e2e8f0',
-      boxShadow: 'none',
-      '&:hover': {
-        border: '1px solid #cbd5e0',
-      },
-    }),
-    menu: (provided) => ({
-      ...provided,
-      boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-    }),
-  };
 
   return (
     <>
@@ -220,7 +206,6 @@ export default function FormV2({ setOutput }) {
               onChange={setSelectedModel}
               placeholder="Pilih model AI"
               isSearchable
-              styles={customStyles}
             />
           </div>
           <p className="text-gray-500 text-sm">
@@ -246,7 +231,6 @@ export default function FormV2({ setOutput }) {
             onChange={handleBrandSelect}
             placeholder="Pilih merek"
             isSearchable
-            styles={customStyles}
             isLoading={isLoading && !selectedBrand}
             formatGroupLabel={(group) => (
               <div style={{ fontWeight: 'bold', color: '#555', fontSize: '1.1em' }}>
@@ -260,7 +244,6 @@ export default function FormV2({ setOutput }) {
               onChange={handleDeviceSelect}
               placeholder="Pilih perangkat"
               isSearchable
-              styles={customStyles}
               isLoading={isLoading && selectedBrand}
             />
           )}
