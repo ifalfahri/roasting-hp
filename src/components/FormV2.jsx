@@ -222,8 +222,8 @@ export default function FormV2({ setOutput }) {
             </a>
           </p>
         </div>
-        <h1 className="font-semibold flex justify-center gap-2 text-2xl mb-4">
-          Roasting HP v2
+        <h1 className="font-extrabold flex justify-center gap-1 text-2xl mb-4 bg-gradient-to-r from-indigo-400 to-blue-400 text-transparent bg-clip-text">
+          Roasting HP<span className='text-black text-xs hover:text-red-400 transition-colors duration-300'>V2</span>
         </h1>
         <div className="specs-form space-y-4">
           <Select
@@ -278,7 +278,7 @@ export default function FormV2({ setOutput }) {
           data-tooltip-id="v1-tooltip"
           data-tooltip-content="Kembali ke versi lama"
         >
-          v1
+          V1
         </button>
       </div>
       <Tooltip id="v1-tooltip" style={{ transition: 'opacity 0.3s' }} />

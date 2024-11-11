@@ -142,7 +142,7 @@ function Form({ setOutput }) {
           data-tooltip-id="v2-tooltip"
           data-tooltip-content="Pergi ke versi baru"
         >
-          v2
+          V2
         </button>
       </div>
       <Tooltip id="github-tooltip" />
