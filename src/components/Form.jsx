@@ -137,7 +137,7 @@ function Form({ setOutput }) {
     </form>
     <div className="fixed bottom-4 right-4">
         <button
-          className="bg-blue-500 hover:bg-blue-600 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg"
+          className="bg-blue-400 hover:bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg"
           onClick={() => setIsModalOpen(true)}
           data-tooltip-id="v2-tooltip"
           data-tooltip-content="Pergi ke versi baru"
