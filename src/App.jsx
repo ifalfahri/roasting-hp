@@ -10,7 +10,7 @@ function App() {
 
   return (
     <Router>
-      <div>
+      
         
 
         <main className="bg-white w-full p-6 max-w-lg mx-auto rounded-2xl font-Inter">
@@ -20,7 +20,7 @@ function App() {
           </Routes>
           <Output output={output} />
         </main>
-      </div>
+      
     </Router>
   );
 }
