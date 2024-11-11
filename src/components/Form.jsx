@@ -37,7 +37,7 @@ function Form({ setOutput }) {
     ];
 
     const vision = new ChatGoogleGenerativeAI({
-      apiKey: process.env.GOOGLE_API_KEY,
+      apiKey: import.meta.env.GOOGLE_API_KEY,
     });
 
     // Define the safety settings
