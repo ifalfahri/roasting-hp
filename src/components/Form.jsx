@@ -137,7 +137,7 @@ function Form({ setOutput }) {
     </form>
     <div className="fixed bottom-4 right-4">
         <button
-          className="bg-blue-400 hover:bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg"
+          className="bg-gradient-to-r from-indigo-400 to-blue-400 hover:bg-blue-500 font-bold hover:font-black text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-all duration-300 ease-in-out hover:scale-110"
           onClick={() => setIsModalOpen(true)}
           data-tooltip-id="v2-tooltip"
           data-tooltip-content="Pergi ke versi baru"
@@ -145,7 +145,7 @@ function Form({ setOutput }) {
           V2
         </button>
       </div>
-      <Tooltip id="github-tooltip" />
+      <Tooltip className="" id="github-tooltip" />
       <Tooltip id="v2-tooltip" />
       <Modal
         isOpen={isModalOpen}
