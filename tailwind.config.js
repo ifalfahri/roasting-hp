@@ -8,6 +8,9 @@ export default {
     extend: {
       fontFamily: {
         Inter: ['Inter', 'sans-serif'],
+      },
+      animation: {
+        'bounce': 'bounce 0.5s infinite',
       }
     },
   },
