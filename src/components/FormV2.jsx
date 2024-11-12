@@ -9,6 +9,7 @@ import { HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 import { Link } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import Modal from 'react-modal';
+import AIModelSelector from './AIModelSelector';
 
 export default function FormV2({ setOutput }) {
   const [brands, setBrands] = useState([]);
@@ -200,12 +201,9 @@ export default function FormV2({ setOutput }) {
       <form onSubmit={handleSubmit} className="relative">
         <div className="flex justify-between items-center mb-8">
           <div className="w-40">
-            <Select className='text-xs' 
-              options={modelOptions}
-              defaultValue="Gemini 1.5 Flash"
-              onChange={setSelectedModel}
-              placeholder="Pilih model AI"
-              isSearchable
+            <AIModelSelector
+            selectedModel={selectedModel}
+            setSelectedModel={setSelectedModel}
             />
           </div>
           <p className="text-gray-500 text-sm">
