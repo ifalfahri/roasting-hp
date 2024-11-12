@@ -8,9 +8,12 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import Modal from 'react-modal';
+import AIModelSelector from "./AIModelSelector";
 
 function Form({ setOutput }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedModel, setSelectedModel] = useState(null);
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setOutput("Sedang mikirin roastingan...");
@@ -37,7 +40,7 @@ function Form({ setOutput }) {
     ];
 
     const vision = new ChatGoogleGenerativeAI({
-      apiKey: import.meta.env.GOOGLE_API_KEY,
+      apiKey: import.meta.env.VITE_GOOGLE_API_KEY,
     });
 
     // Define the safety settings
@@ -104,7 +107,10 @@ function Form({ setOutput }) {
   return (
     <>
     <form onSubmit={handleSubmit}>
-      <div className="flex justify-end mb-2">
+      <div className="flex justify-between items-center mb-8">
+        <AIModelSelector
+        selectedModel={selectedModel}
+        setSelectedModel={setSelectedModel}/>
         <p className="text-gray-500 text-sm ">
           by{" "}
           <a
