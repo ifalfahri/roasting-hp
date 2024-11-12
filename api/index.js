@@ -30,6 +30,8 @@ class APICache {
 const app = express();
 const cache = new APICache();
 
+app.set("trust proxy", 1);
+
 // Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
