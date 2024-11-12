@@ -1,4 +1,4 @@
-class APICache {
+export default class APICache {
     constructor() {
       this.cache = new Map();
       this.expiryTime = 24 * 60 * 60 * 1000; // 24 hours
