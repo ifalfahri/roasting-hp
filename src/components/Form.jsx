@@ -10,7 +10,7 @@ import { generateRoast } from "../services/phoneRoaster";
 
 function Form({ setOutput }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedModel, setSelectedModel] = useState(null);
+  const [selectedModel, setSelectedModel] = useState({ value: 'gemini-1.5-flash', label: 'Gemini 1.5 Flash', provider: 'gemini' });
 
   const handleSubmit = async (event) => {
     event.preventDefault();

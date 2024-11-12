@@ -12,7 +12,7 @@ export default function FormV2({ setOutput }) {
   const [devices, setDevices] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [selectedDevice, setSelectedDevice] = useState(null);
-  const [selectedModel, setSelectedModel] = useState(null);
+  const [selectedModel, setSelectedModel] = useState({ value: 'gemini-1.5-flash', label: 'Gemini 1.5 Flash', provider: 'gemini' });
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   
