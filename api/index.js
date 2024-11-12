@@ -2,7 +2,30 @@ import express from "express";
 import cors from "cors";
 import gsmarena from "gsmarena-api";
 import rateLimit from "express-rate-limit";
-import APICache from "./utils/apiCache";
+
+class APICache {
+  constructor() {
+    this.cache = new Map();
+    this.expiryTime = 24 * 60 * 60 * 1000; // 24 hours
+  }
+
+  get(key) {
+    const item = this.cache.get(key);
+    if (!item) return null;
+    if (Date.now() > item.expiry) {
+      this.cache.delete(key);
+      return null;
+    }
+    return item.data;
+  }
+
+  set(key, data) {
+    this.cache.set(key, {
+      data,
+      expiry: Date.now() + this.expiryTime,
+    });
+  }
+}
 
 const app = express();
 const cache = new APICache();
@@ -58,7 +81,6 @@ app.get("/api/devices/:brandId", async (req, res) => {
   }
 
   try {
-    // Fix template literal syntax
     const cacheKey = `devices-${brandId}`;
     const cachedDevices = cache.get(cacheKey);
 
@@ -98,3 +120,10 @@ app.get("/api/devices/:brandId", async (req, res) => {
     });
   }
 });
+
+// For local development
+if (process.env.NODE_ENV !== "production") {
+  app.listen(3000, () => {
+    console.log("Server is running on http://localhost:3000");
+  });
+}
