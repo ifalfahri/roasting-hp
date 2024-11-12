@@ -121,6 +121,58 @@ app.get("/api/devices/:brandId", async (req, res) => {
   }
 });
 
+app.get("/api/device/:deviceId", async (req, res) => {
+  const { deviceId } = req.params;
+
+  // Validate deviceId
+  if (!deviceId) {
+    return res.status(400).json({ error: "Device ID is required" });
+  }
+
+  try {
+    const cacheKey = `device-${deviceId}`;
+    const cachedDevice = cache.get(cacheKey);
+
+    if (cachedDevice) {
+      return res.json(cachedDevice);
+    }
+
+    const device = await retryWithDelay(
+      async () => {
+        const result = await gsmarena.catalog.getDevice(deviceId);
+        if (!result || typeof result !== "object") {
+          throw new Error("Invalid response from GSMArena");
+        }
+        return result;
+      },
+      3, // retries
+      2000 // delay ms
+    );
+
+    // Cache the result
+    cache.set(cacheKey, device);
+    res.json(device);
+  } catch (error) {
+    console.error(
+      `Error fetching device details for device ${deviceId}:`,
+      error
+    );
+
+    if (error.message.includes("429")) {
+      return res.status(429).json({
+        error: "Rate limit exceeded",
+        retry: true,
+        retryAfter: "60 seconds",
+      });
+    }
+
+    res.status(500).json({
+      error: "Failed to fetch device details",
+      message: error.message,
+    });
+  }
+});
+
 // For local development
 if (process.env.NODE_ENV !== "production") {
   app.listen(3000, () => {
