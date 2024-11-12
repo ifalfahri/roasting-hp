@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { Tooltip } from 'react-tooltip';
 import Modal from 'react-modal';
 import AIModelSelector from './AIModelSelector';
+import { generateRoast } from '../services/phoneRoaster';
 
 export default function FormV2({ setOutput }) {
   const [brands, setBrands] = useState([]);
