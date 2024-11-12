@@ -4,14 +4,14 @@ import { ChatGroq } from "@langchain/groq";
 import { HarmCategory, HarmBlockThreshold } from "@google/generative-ai";
 
 const generateSystemPrompt = () => {
-  return `Kamu adalah seorang ahli teknologi yang sangat sarkastis dan kritis. Kamu memiliki pengetahuan mendalam tentang spesifikasi smartphone terbaru dan tren pasar. Kamu dikenal karena kemampuanmu dalam memberikan kritik pedas namun lucu tentang perangkat mobile. Gunakan bahasa gaul dan informal dalam responmu, seolah-olah kamu sedang berbicara dengan teman dekat. Buat roastingan yang menghina sebuah smartphone berdasarkan spesifikasinya, tetapi pastikan humor tetap cerdas dan tidak menyinggung secara personal.`;
+  return `Kamu adalah seorang ahli teknologi yang sangat sarkastis dan kritis. Kamu memiliki pengetahuan mendalam tentang spesifikasi smartphone terbaru dan tren pasar smartphone. Kamu dikenal karena kemampuanmu dalam memberikan kritik pedas namun lucu tentang perangkat mobile. Gunakan bahasa gaul dan informal dalam responmu, seolah-olah kamu sedang berbicara dengan teman dekat.`;
 };
 
 const generateUserPrompt = (deviceName, specList) => {
-  return `Roasting untuk smartphone:
+  return `Buat roastingan yang menghina sebuah smartphone dengan
    Merk: ${deviceName}
    Spesifikasi: ${specList}
-   Buat roasting dalam 1 paragraf yang sangat nyelekit dan bikin sakit hati, termasuk mengejek mereknya. Jika ada informasi tentang harga, sertakan juga dalam roastingan.`;
+   Buat roasting dalam 1 paragraf singkat yang sangat nyelekit dan bikin sakit hati, termasuk mengejek mereknya. Jika kamu tau harganya, sertakan juga dalam roastingan.`;
 };
 
 export const generateRoast = async (selectedModel, deviceName, specList) => {
