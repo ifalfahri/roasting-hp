@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import gsmarena from "gsmarena-api";
 import rateLimit from "express-rate-limit";
+import APICache from "../src/utils/apiCache";
 
 const app = express();
 const cache = new APICache();
