@@ -100,44 +100,8 @@ export default function FormV2({ setOutput }) {
       .map(spec => `${translateSpecName(spec.name)}: ${spec.value}`)
       .join(', ');
 
-    const promptText = `Kamu adalah seorang yang expert dalam spesifikasi hp, dan update mengenai tipe-tipe hp dan menggunakan bahasa gaul. Buat sebuah roasting yang menghina sebuah hp dengan  
-       Merk ${selectedDevice.name}, ejek merknya, kemudian spesifikasi:
-       ${specList}
-       Bahas juga harganya jika memungkinkan, semua dalam 1 paragraf saja tapi sangat nyelekit dan bikin sakit hati`;
-
-    const contents = [
-      new HumanMessage({
-        content: promptText,
-      }),
-    ];
-
-    let model;
-    if (selectedModel.provider === 'gemini') {
-      model = new ChatGoogleGenerativeAI({
-        modelName: selectedModel.value,
-        apiKey: import.meta.env.VITE_GOOGLE_API_KEY,
-      });
-    } else if (selectedModel.provider === 'groq') {
-      model = new ChatGroq({
-        apiKey: import.meta.env.VITE_GROQ_API_KEY,
-        model: selectedModel.value,
-      });
-    }
-
     try {
-      let streamRes;
-      if (selectedModel.provider === 'gemini') {
-        const safetySettings = {
-          [HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT]:
-            HarmBlockThreshold.BLOCK_NONE,
-        };
-        const originalGenerate = model._generate;
-        model._generate = originalGenerate.bind(model, {
-          safety_settings: safetySettings,
-        });
-      }
-
-      streamRes = await model.stream(contents);
+      const streamRes = await generateRoast(selectedModel, selectedDevice.name, specList);
 
       const buffer = [];
       const md = new MarkdownIt();
