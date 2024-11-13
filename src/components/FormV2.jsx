@@ -16,6 +16,7 @@ export default function FormV2({ setOutput }) {
   const [selectedModel, setSelectedModel] = useState({ value: 'gemini-1.5-flash', label: 'Gemini 1.5 Flash', provider: 'gemini' });
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [error, setError] = useState(null);
   
   const API_BASE_URL = "/api";
   
@@ -56,14 +57,22 @@ export default function FormV2({ setOutput }) {
     setSelectedBrand(selectedOption);
     setSelectedDevice(null);
     setDevices([]);
+    setError(null);
     if (selectedOption) {
       setIsLoading(true);
       try {
         const response = await fetch(`${API_BASE_URL}/devices/${selectedOption.value}`);
+        if (!response.ok) {
+          if (response.status === 429) {
+            throw new Error('Lagi rame nih, jadi lupa sama nama-nama hp untuk sementara. Silakan coba lagi setelah beberapa saat. Untuk alternatifnya bisa pake V1 dulu yaa');
+          }
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const deviceList = await response.json();
         setDevices(deviceList.map(device => ({ value: device.id, label: device.name })));
       } catch (error) {
         console.error('Error fetching devices:', error);
+        setError(error.message);
       }
       setIsLoading(false);
     }
@@ -71,14 +80,22 @@ export default function FormV2({ setOutput }) {
 
   const handleDeviceSelect = async (selectedOption) => {
     setSelectedDevice(null);
+    setError(null);
     if (selectedOption) {
       setIsLoading(true);
       try {
         const response = await fetch(`${API_BASE_URL}/device/${selectedOption.value}`);
+        if (!response.ok) {
+          if (response.status === 429) {
+            throw new Error('Lagi rame nih, jadi lupa sama spek hp nya apa untuk sementara. Silakan coba lagi setelah beberapa saat. Untuk alternatifnya bisa pake V1 dulu yaa');
+          }
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
         const deviceDetails = await response.json();
         setSelectedDevice(deviceDetails);
       } catch (error) {
         console.error('Error fetching device details:', error);
+        setError(error.message);
       }
       setIsLoading(false);
     }
@@ -212,6 +229,11 @@ export default function FormV2({ setOutput }) {
                   ))}
                 </ul>
               </div>
+            </div>
+          )}
+          {error && (
+            <div className="text-red-500 text-center p-2 bg-red-100 rounded">
+              {error}
             </div>
           )}
         </div>
