@@ -6,8 +6,8 @@
 
 **Roasting HP** is a fun website that roasts your phone based on its specifications. Just select your phone model and get ready for some laughs powered by AI! 
 
-[Check it out here!](https://roasting-hp.vercel.app)
-or [here!](https://roastinghp.vercel.app)
+![Logo](https://res.cloudinary.com/dyjxcujz4/image/upload/v1731567505/logoroasthp_icmpyv.svg)
+
 
 ---
 
@@ -23,7 +23,12 @@ or [here!](https://roastinghp.vercel.app)
 - **Tailwind CSS** for styling.
 - **GSMArena API** for automatically fetching phone specs, saving users from manual input.
 - **LangChain** for powering the different roast models by managing the coordination between—
-- **Gemini API** and **Groq API** 
+- **Gemini API** and **Groq API**
+
+## Live Demo 🌐
+
+Check out the live demo here: [Roasting HP](https://roastinghp.vercel.app)
+
 
 ## Contributing 🤝
 Feel free to fork this repository and submit pull requests!
