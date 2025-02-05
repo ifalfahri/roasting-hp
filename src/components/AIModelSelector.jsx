@@ -1,10 +1,10 @@
 import Select from 'react-select';
 
 const modelOptions = [
-  { value: 'gemini-1.5-flash', label: 'Gemini 1.5 Flash', provider: 'gemini' },
-  { value: 'gemini-1.0-pro', label: 'Gemini 1.0 Pro', provider: 'gemini' },
-  { value: 'llama-3.2-3b-preview', label: 'Llama 3.2 3B Preview', provider: 'groq' },
-  { value: 'llama-3.1-70b-versatile', label: 'Llama 3.1 70B Versatile', provider: 'groq' },
+  { value: 'gemini-2.0-flash-exp', label: 'Gemini 2.0 Flash', provider: 'gemini' },
+  { value: 'gemini-1.5-pro', label: 'Gemini 1.5 Pro', provider: 'gemini' },
+  { value: 'llama-3.3-70b-versatile', label: 'Llama 3.3', provider: 'groq' },
+  { value: 'gemma2-9b-it', label: 'Gemma2', provider: 'groq' },
   { value: 'mixtral-8x7b-32768', label: 'Mixtral 8x7B', provider: 'groq' },
 ];
 
