@@ -21,7 +21,7 @@
 ## Technologies Used 🛠️
 - **ReactJS** for the frontend.
 - **Tailwind CSS** for styling.
-- **GSMArena API** for automatically fetching phone specs, saving users from manual input.
+- **GSMArena API** for automatically fetching phone specs, saving users from manual input. Well, i use wrapper, so i hope they actually okay with me using it. I don't want it to be a sin.
 - **LangChain** for powering the different roast models by managing the coordination between—
 - **Gemini API** and **Groq API**
 
