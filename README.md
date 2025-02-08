@@ -14,7 +14,7 @@
 ## Features 🎯
 - 🖥️ **Simple Interface**: No typing needed—just select your phone model, and the specs auto-fill.
 - 🔥 **Real-Time Roasts**: Now powered by **Gemini API** and **Groq API**, delivering more dynamic and diverse burns.
-- 🤖 **Multiple Models**: Choose from 5 different models, including gemini 1.5, llama 3.2, and more.
+- 🤖 **Multiple Models**: Choose from 5 different models, including `Gemini 2.0`, `Deepseek R1`, `Llama 3.3`, and more.
 - 📱 **Viral on TikTok**: Reached **300k views** in TikTok.
 
 
