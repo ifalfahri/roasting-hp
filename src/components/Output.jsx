@@ -1,5 +1,3 @@
-import React from 'react';
-
 function Output({ output }) { 
   return (
     <div className="output flex justify-center items-center">
