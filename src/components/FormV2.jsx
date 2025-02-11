@@ -1,26 +1,45 @@
-import { useState, useEffect } from 'react';
-import Select from 'react-select';
-import Button from './Button';
 import MarkdownIt from "markdown-it";
-import { Link } from 'react-router-dom';
-import { Tooltip } from 'react-tooltip';
-import Modal from 'react-modal';
-import AIModelSelector from './AIModelSelector';
-import { generateRoast } from '../services/phoneRoaster';
+import { useEffect, useState } from "react";
+import Modal from "react-modal";
+import { Link } from "react-router-dom";
+import Select from "react-select";
+import { Tooltip } from "react-tooltip";
+import { generateRoast } from "../services/phoneRoaster";
+import AIModelSelector from "./AIModelSelector";
+import Button from "./Button";
 
 export default function FormV2({ setOutput }) {
   const [brands, setBrands] = useState([]);
   const [devices, setDevices] = useState([]);
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [selectedDevice, setSelectedDevice] = useState(null);
-  const [selectedModel, setSelectedModel] = useState({ value: 'gemini-1.5-flash', label: 'Gemini 1.5 Flash', provider: 'gemini' });
+  const [selectedModel, setSelectedModel] = useState({
+    value: "gemini-2.0-flash-exp",
+    label: "Gemini 2.0 Flash",
+    provider: "gemini",
+  });
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [error, setError] = useState(null);
-  
+
   const API_BASE_URL = "/api";
-  
-  const famousBrands = ["Apple", "Samsung", "Xiaomi", "Huawei", "Oppo", "Vivo", "Realme", "Sony", "OnePlus", "Infinix", "Tecno", "Asus", "Google", "vivo"];
+
+  const famousBrands = [
+    "Apple",
+    "Samsung",
+    "Xiaomi",
+    "Huawei",
+    "Oppo",
+    "Vivo",
+    "Realme",
+    "Sony",
+    "OnePlus",
+    "Infinix",
+    "Tecno",
+    "Asus",
+    "Google",
+    "vivo",
+  ];
 
   useEffect(() => {
     const fetchBrands = async () => {
@@ -46,7 +65,7 @@ export default function FormV2({ setOutput }) {
 
         setBrands(groupedOptions);
       } catch (error) {
-        console.error('Error fetching brands:', error);
+        console.error("Error fetching brands:", error);
       }
       setIsLoading(false);
     };
@@ -61,17 +80,23 @@ export default function FormV2({ setOutput }) {
     if (selectedOption) {
       setIsLoading(true);
       try {
-        const response = await fetch(`${API_BASE_URL}/devices/${selectedOption.value}`);
+        const response = await fetch(
+          `${API_BASE_URL}/devices/${selectedOption.value}`
+        );
         if (!response.ok) {
           if (response.status === 429) {
-            throw new Error('Lagi rame nih, jadi lupa sama nama-nama hp untuk sementara. Silakan coba lagi setelah beberapa saat. Untuk alternatifnya bisa pake V1 dulu yaa');
+            throw new Error(
+              "Lagi rame nih, jadi lupa sama nama-nama hp untuk sementara. Silakan coba lagi setelah beberapa saat. Untuk alternatifnya bisa pake V1 dulu yaa"
+            );
           }
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const deviceList = await response.json();
-        setDevices(deviceList.map(device => ({ value: device.id, label: device.name })));
+        setDevices(
+          deviceList.map((device) => ({ value: device.id, label: device.name }))
+        );
       } catch (error) {
-        console.error('Error fetching devices:', error);
+        console.error("Error fetching devices:", error);
         setError(error.message);
       }
       setIsLoading(false);
@@ -84,17 +109,21 @@ export default function FormV2({ setOutput }) {
     if (selectedOption) {
       setIsLoading(true);
       try {
-        const response = await fetch(`${API_BASE_URL}/device/${selectedOption.value}`);
+        const response = await fetch(
+          `${API_BASE_URL}/device/${selectedOption.value}`
+        );
         if (!response.ok) {
           if (response.status === 429) {
-            throw new Error('Lagi rame nih, jadi lupa sama spek hp nya apa untuk sementara. Silakan coba lagi setelah beberapa saat. Untuk alternatifnya bisa pake V1 dulu yaa');
+            throw new Error(
+              "Lagi rame nih, jadi lupa sama spek hp nya apa untuk sementara. Silakan coba lagi setelah beberapa saat. Untuk alternatifnya bisa pake V1 dulu yaa"
+            );
           }
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const deviceDetails = await response.json();
         setSelectedDevice(deviceDetails);
       } catch (error) {
-        console.error('Error fetching device details:', error);
+        console.error("Error fetching device details:", error);
         setError(error.message);
       }
       setIsLoading(false);
@@ -111,11 +140,15 @@ export default function FormV2({ setOutput }) {
     }
 
     const specList = selectedDevice.quickSpec
-      .map(spec => `${translateSpecName(spec.name)}: ${spec.value}`)
-      .join(', ');
+      .map((spec) => `${translateSpecName(spec.name)}: ${spec.value}`)
+      .join(", ");
 
     try {
-      const streamRes = await generateRoast(selectedModel, selectedDevice.name, specList);
+      const streamRes = await generateRoast(
+        selectedModel,
+        selectedDevice.name,
+        specList
+      );
 
       const buffer = [];
       const md = new MarkdownIt();
@@ -125,46 +158,54 @@ export default function FormV2({ setOutput }) {
           buffer.push(chunk.content);
           setOutput(md.render(buffer.join("")));
         } else {
-          console.warn("Chunk tidak terdefinisi atau tidak memiliki konten:", chunk);
+          console.warn(
+            "Chunk tidak terdefinisi atau tidak memiliki konten:",
+            chunk
+          );
         }
       }
     } catch (e) {
       console.error("Error:", e);
       if (e.message.includes("429")) {
-        setOutput("Waduh, AI-nya lagi rame nih! Coba lagi se-menit kemudian yaa. Kalo masih gabisa, coba model lain.");
+        setOutput(
+          "Waduh, AI-nya lagi rame nih! Coba lagi se-menit kemudian yaa. Kalo masih gabisa, coba model lain."
+        );
       } else {
-        setOutput(prevOutput => prevOutput + "<br><span class='text-gray-500'><center>(Yah, kayaknya sinyal ke otak AI-nya putus. Kayanya kena azab karena keseringan roasting deh. Coba ulangi lagi yaa.)</center></span>");
+        setOutput(
+          (prevOutput) =>
+            prevOutput +
+            "<br><span class='text-gray-500'><center>(Yah, kayaknya sinyal ke otak AI-nya putus. Kayanya kena azab karena keseringan roasting deh. Coba ulangi lagi yaa.)</center></span>"
+        );
       }
     }
   };
 
   const translateSpecName = (name) => {
     const translations = {
-      'Display': 'Layar',
-      'Display size': 'Ukuran Layar',
-      'Display resolution': 'Resolusi Layar',
-      'Camera': 'Kamera',
-      'Camera pixels': 'Resolusi Kamera',
-      'Video pixels': 'Resolusi Video',
-      'RAM': 'RAM',
-      'RAM size': 'Kapasitas RAM',
-      'Battery': 'Baterai',
-      'Battery size': 'Kapasitas Baterai',
-      'Battery type': 'Tipe Baterai',
-      'OS': 'Sistem Operasi',
-      'Chipset': 'Prosesor',
-      'Internal': 'Penyimpanan Internal',
-      'Main Camera': 'Kamera Utama',
-      'Selfie camera': 'Kamera Selfie',
-      'Single': 'Tunggal',
-      'Triple': 'Triple',
-      'Features': 'Fitur',
-      'Platform': 'Platform',
-      'Memory': 'Memori',
+      Display: "Layar",
+      "Display size": "Ukuran Layar",
+      "Display resolution": "Resolusi Layar",
+      Camera: "Kamera",
+      "Camera pixels": "Resolusi Kamera",
+      "Video pixels": "Resolusi Video",
+      RAM: "RAM",
+      "RAM size": "Kapasitas RAM",
+      Battery: "Baterai",
+      "Battery size": "Kapasitas Baterai",
+      "Battery type": "Tipe Baterai",
+      OS: "Sistem Operasi",
+      Chipset: "Prosesor",
+      Internal: "Penyimpanan Internal",
+      "Main Camera": "Kamera Utama",
+      "Selfie camera": "Kamera Selfie",
+      Single: "Tunggal",
+      Triple: "Triple",
+      Features: "Fitur",
+      Platform: "Platform",
+      Memory: "Memori",
     };
     return translations[name] || name;
   };
-
 
   return (
     <>
@@ -172,8 +213,8 @@ export default function FormV2({ setOutput }) {
         <div className="flex justify-between items-center mb-8">
           <div className="w-40">
             <AIModelSelector
-            selectedModel={selectedModel}
-            setSelectedModel={setSelectedModel}
+              selectedModel={selectedModel}
+              setSelectedModel={setSelectedModel}
             />
           </div>
           <p className="text-gray-500 text-sm">
@@ -191,7 +232,10 @@ export default function FormV2({ setOutput }) {
           </p>
         </div>
         <h1 className="font-extrabold flex justify-center gap-1 text-2xl mb-4 bg-gradient-to-r from-indigo-400 to-blue-400 text-transparent bg-clip-text active:animate-bounce">
-          Roasting HP<span className='text-black text-xs hover:text-red-400 transition-colors duration-300'>V2</span>
+          Roasting HP
+          <span className="text-black text-xs hover:text-red-400 transition-colors duration-300">
+            V2
+          </span>
         </h1>
         <div className="specs-form space-y-4">
           <Select
@@ -201,7 +245,9 @@ export default function FormV2({ setOutput }) {
             isSearchable
             isLoading={isLoading && !selectedBrand}
             formatGroupLabel={(group) => (
-              <div style={{ fontWeight: 'bold', color: '#555', fontSize: '1.1em' }}>
+              <div
+                style={{ fontWeight: "bold", color: "#555", fontSize: "1.1em" }}
+              >
                 {group.label}
               </div>
             )}
@@ -217,13 +263,21 @@ export default function FormV2({ setOutput }) {
           )}
           {selectedDevice && (
             <div className="mb-4 p-4 border rounded-lg bg-gray-50">
-              <h2 className="font-semibold text-lg mb-2">{selectedDevice.name}</h2>
+              <h2 className="font-semibold text-lg mb-2">
+                {selectedDevice.name}
+              </h2>
               <div className="flex items-start">
-                <img src={selectedDevice.img} alt={selectedDevice.name} className="w-32 h-32 object-contain mr-4" />
+                <img
+                  src={selectedDevice.img}
+                  alt={selectedDevice.name}
+                  className="w-32 h-32 object-contain mr-4"
+                />
                 <ul className="text-sm grid grid-cols-2 gap-2">
                   {selectedDevice.quickSpec.map((spec, index) => (
                     <li key={index} className="flex flex-col">
-                      <span className="font-medium">{translateSpecName(spec.name)}:</span>
+                      <span className="font-medium">
+                        {translateSpecName(spec.name)}:
+                      </span>
                       <span>{translateSpecName(spec.value)}</span>
                     </li>
                   ))}
@@ -238,8 +292,11 @@ export default function FormV2({ setOutput }) {
           )}
         </div>
         <div className="prompt-box flex justify-center my-6 w-full gap-2 items-end">
-          <Button type="submit" disabled={!selectedDevice || !selectedModel || isLoading}>
-            {isLoading ? 'Memuat...' : 'Roasting'}
+          <Button
+            type="submit"
+            disabled={!selectedDevice || !selectedModel || isLoading}
+          >
+            {isLoading ? "Memuat..." : "Roasting"}
           </Button>
         </div>
       </form>
@@ -254,8 +311,8 @@ export default function FormV2({ setOutput }) {
           V1
         </button>
       </div>
-      <Tooltip id="v1-tooltip" style={{ transition: 'opacity 0.3s' }} />
-      <Tooltip id="github-tooltip" style={{ transition: 'opacity 0.3s' }} />
+      <Tooltip id="v1-tooltip" style={{ transition: "opacity 0.3s" }} />
+      <Tooltip id="github-tooltip" style={{ transition: "opacity 0.3s" }} />
       <Modal
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}
@@ -263,7 +320,9 @@ export default function FormV2({ setOutput }) {
         overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
       >
         <h2 className="text-xl font-semibold mb-4">Kembali ke Versi Lama?</h2>
-        <p className="mb-4">Anda akan dialihkan ke versi lama dari situs ini. Lanjutkan?</p>
+        <p className="mb-4">
+          Anda akan dialihkan ke versi lama dari situs ini. Lanjutkan?
+        </p>
         <div className="flex justify-end space-x-4">
           <button
             type="button"
