@@ -115,7 +115,7 @@ export default function FormV2({ setOutput }) {
         if (!response.ok) {
           if (response.status === 429) {
             throw new Error(
-              "Lagi rame nih, jadi lupa sama spek hp nya apa untuk sementara. Silakan coba lagi setelah beberapa saat. Untuk alternatifnya bisa pake V1 dulu yaa"
+              "Lagi rame nih websitenya, jadi lupa sama spek-spek hp untuk sementara. Silakan coba lagi setelah beberapa saat. Untuk alternatifnya bisa pake V1 dulu yaa. Bisa tekan tombol di bawah kanan"
             );
           }
           throw new Error(`HTTP error! status: ${response.status}`);
